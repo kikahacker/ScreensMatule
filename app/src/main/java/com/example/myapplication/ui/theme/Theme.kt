@@ -30,6 +30,8 @@ data class MatuleColors(
 @Immutable
 data class MatuleTextStyle(
     val headingBold32: TextStyle,
+    val headingExtraBold32: TextStyle,
+    val headingBold30: TextStyle,
     val subTitleRegular16: TextStyle,
     val bodyRegular16: TextStyle,
     val bodyRegular14: TextStyle,
@@ -40,6 +42,8 @@ data class MatuleTextStyle(
 val LocalMatuleTypography = staticCompositionLocalOf {
     MatuleTextStyle(
         headingBold32 = TextStyle.Default,
+        headingExtraBold32 = TextStyle.Default,
+        headingBold30 = TextStyle.Default,
         subTitleRegular16 = TextStyle.Default,
         bodyRegular16 = TextStyle.Default,
         bodyRegular14 = TextStyle.Default,
@@ -85,6 +89,8 @@ fun MatuleTheme( content: @Composable () -> Unit){
     )
     val matuleTypography = MatuleTextStyle(
         headingBold32 = TextStyle(fontFamily = matuleFontFamily, fontWeight = FontWeight.Bold, fontSize = 32.sp),
+        headingExtraBold32 = TextStyle(fontFamily = matuleFontFamily, fontWeight = FontWeight.ExtraBold, fontSize = 32.sp),
+        headingBold30 = TextStyle(fontFamily = matuleFontFamily, fontWeight = FontWeight.Bold, fontSize = 30.sp),
         headingBold24 = TextStyle(fontFamily = matuleFontFamily, fontWeight = FontWeight.Bold, fontSize = 24.sp),
         subTitleRegular16 = TextStyle(fontFamily = matuleFontFamily, fontWeight = FontWeight.Normal, fontSize = 16.sp),
         bodyRegular16 = TextStyle(fontFamily = matuleFontFamily, fontWeight = FontWeight.Normal, fontSize = 16.sp),
