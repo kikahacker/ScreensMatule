@@ -28,16 +28,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.myapplication.R
+import com.example.myapplication.ui.local.DataStoreOnBoarding
 import com.example.myapplication.ui.theme.MatuleTheme
 
-
-@Preview
-@Composable
-fun WelcomeScreen1Prewiew(){
-    MatuleTheme{
-        WelcomeScreen1()
-    }
-}
 
 @Composable
 fun WelcomeScreen1(){

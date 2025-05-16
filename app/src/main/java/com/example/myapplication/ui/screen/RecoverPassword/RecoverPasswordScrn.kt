@@ -4,28 +4,43 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewParameter
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavHostController
+import com.example.myapplication.Otp
 import com.example.myapplication.R
+import com.example.myapplication.SignIn
 import com.example.myapplication.ui.screen.component.AuthButton
 import com.example.myapplication.ui.screen.component.AuthTextField
+import com.example.myapplication.ui.screen.component.MinimalDialog
 import com.example.myapplication.ui.screen.component.TitleWithSubtitleText
 
-@Preview
+
 @Composable
-fun RecoverPasswordScrn(){
+fun RecoverPasswordScrn(navController: NavHostController){
     val recoverPasswordViewModel: RecoverPasswordViewModel = viewModel()
     Scaffold(
         topBar = {
@@ -36,7 +51,7 @@ fun RecoverPasswordScrn(){
                     .height(40.dp)
             )
             {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {navController.navigate(route = SignIn)}) {
                     Icon(painter = painterResource(R.drawable.back_arrow),
                         contentDescription = null)
                 }
@@ -45,14 +60,16 @@ fun RecoverPasswordScrn(){
     )
     {
         paddingValues ->
-        RecoverPasswordContent(paddingValues, recoverPasswordViewModel)
+        RecoverPasswordContent(paddingValues, recoverPasswordViewModel,navController)
     }
 }
 @Composable
 fun RecoverPasswordContent(
     paddingValues: PaddingValues,
-    recoverPasswordViewModel: RecoverPasswordViewModel
+    recoverPasswordViewModel: RecoverPasswordViewModel,
+    navController: NavHostController
 ){
+    val openAlertDialog = remember { mutableStateOf(false) }
     val recoverPasswordState = recoverPasswordViewModel.recoverPasswordState
     Column(
         modifier = Modifier.padding(top = 100.dp)
@@ -66,6 +83,12 @@ fun RecoverPasswordContent(
         Spacer(
             modifier = Modifier.height(35.dp)
         )
+        if(openAlertDialog.value){
+            MinimalDialog {
+                openAlertDialog.value = false
+                navController.navigate(Otp)
+            }
+        }
         AuthTextField(
             value = recoverPasswordState.value.email,
             onChangeValue = {
@@ -83,9 +106,14 @@ fun RecoverPasswordContent(
             }
         )
         AuthButton(
-            onClick = {}
+            onClick = {openAlertDialog.value = true}
         ) {
             Text(stringResource(R.string.recover))
         }
     }
 }
+
+
+
+
+

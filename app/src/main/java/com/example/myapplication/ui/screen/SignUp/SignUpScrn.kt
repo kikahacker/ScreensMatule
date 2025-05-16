@@ -1,5 +1,8 @@
 package com.example.myapplication.ui.screen.SignUp
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
@@ -8,6 +11,9 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.text.ClickableText
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -29,7 +35,11 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.myapplication.R
+import com.example.myapplication.RecoverPassword
+import com.example.myapplication.SignIn
 import com.example.myapplication.ui.data.domain.usecase.AuthUseCase
 import com.example.myapplication.ui.data.remote.RetrofitClient
 import com.example.myapplication.ui.data.remote.User
@@ -43,15 +53,8 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
-@Preview
 @Composable
-fun asad(){
-    RecoverPasswordScrn()
-}
-
-
-@Composable
-fun SignUpScrn(onNavigationToProfile: () -> Unit) {
+fun SignUpScrn(onNavigationToHome: () -> Unit, navController: NavHostController) {
     val snackBarHostState = remember { SnackbarHostState() }
     val signUpViewModel:SignUpViewModel = koinViewModel()
 
@@ -64,7 +67,7 @@ fun SignUpScrn(onNavigationToProfile: () -> Unit) {
                     .fillMaxWidth()
                     .height(40.dp)
             ) {
-                IconButton(onClick = {}) {
+                IconButton(onClick = {navController.navigate(SignIn)}) {
                     Icon(
                         painter = painterResource(R.drawable.back_arrow),
                         contentDescription = null
@@ -81,11 +84,17 @@ fun SignUpScrn(onNavigationToProfile: () -> Unit) {
                     .fillMaxWidth()
                     .height(40.dp)
             ) {
-                Text(
-                    text = stringResource(R.string.sign_in),
-                    style = MatuleTheme.typography.bodyRegular16.copy(color = MatuleTheme.colors.text),
-                    textAlign = TextAlign.Center
-                )
+                Button(
+                    onClick = { navController.navigate(SignIn) },
+
+                    colors = ButtonDefaults.buttonColors(Color.Transparent),
+                    elevation = null
+
+                ) {
+                    Text(
+                        text = stringResource(R.string.sign_in),
+                        style = MatuleTheme.typography.subTitleRegular16.copy(color = MatuleTheme.colors.text)
+                    ) }
             }
         }
     )
@@ -96,7 +105,7 @@ fun SignUpScrn(onNavigationToProfile: () -> Unit) {
         val registrationScreenState = signUpViewModel.signUpState
         LaunchedEffect(registrationScreenState.value.isSignUp) {
             if(registrationScreenState.value.isSignUp) {
-                onNavigationToProfile()
+                onNavigationToHome()
             }
         }
 
@@ -108,6 +117,7 @@ fun SignUpScrn(onNavigationToProfile: () -> Unit) {
     }
 }
 
+@SuppressLint("CoroutineCreationDuringComposition")
 @Composable
 fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel) {
     val signUpState = signUpViewModel.signUpState
@@ -169,8 +179,8 @@ fun SignUpContent(paddingValues: PaddingValues, signUpViewModel: SignUpViewModel
         val coroutine = rememberCoroutineScope{Dispatchers.IO}
         AuthButton(onClick = {
             val user = User(userName = signUpState.value.name, email = signUpState.value.email, password = signUpState.value.password)
-
             signUpViewModel.signUp()
+
             coroutine.launch {
                 RetrofitClient.retrofit.registration(user)
             }

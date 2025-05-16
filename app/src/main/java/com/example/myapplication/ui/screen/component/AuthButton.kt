@@ -13,12 +13,12 @@ import com.example.myapplication.ui.theme.MatuleTheme
 
 @Composable
 fun AuthButton(
-    onClick: () -> Unit,
+    onClick:  () -> Unit,
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit
 ){
     CommonButton(
-        onClick = onClick,
+        onClick =  onClick,
         buttonColors = ButtonColors(
             contentColor = MatuleTheme.colors.background,
             containerColor = MatuleTheme.colors.accent,

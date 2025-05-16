@@ -46,11 +46,15 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.SemanticsActions.OnClick
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.example.myapplication.R
+import com.example.myapplication.RecoverPassword
 import com.example.myapplication.ui.data.remote.dto.request.AuthorizationRequest
 import com.example.myapplication.ui.screen.component.AuthTextField
 import com.example.myapplication.ui.screen.component.TitleWithSubtitleText
@@ -61,15 +65,9 @@ import kotlin.concurrent.timer
 import kotlin.time.Duration.Companion.seconds
 
 
-@Preview
-@Composable
-fun pr(){
-    MatuleTheme{
-    OptScrn {  }
-}}
 
 @Composable
-fun OptScrn(title: String = "", navigation: () -> Unit) {
+fun OptScrn(title: String = "", navController: NavHostController) {
     var otpValue by remember { mutableStateOf("") }
     val hasError = otpValue.length < 6
     var timerValue by remember { mutableStateOf(30) }
@@ -84,7 +82,7 @@ fun OptScrn(title: String = "", navigation: () -> Unit) {
         .fillMaxSize()
         .padding(16.dp)) {
 
-        AuthorizatioTopBar(title = title, navigation = navigation)
+        AuthorizatioTopBar(title = title, navController = navController)
         Spacer(modifier = Modifier.height(24.dp))
 
         TitleWithSubtitleText(
@@ -142,13 +140,13 @@ fun OptScrn(title: String = "", navigation: () -> Unit) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AuthorizatioTopBar(title: String="", navigation: () -> Unit){
+fun AuthorizatioTopBar(title: String="", navController: NavHostController){
     TopAppBar(
         title = {
 
             Text(text = title)
         }, navigationIcon = {
-        IconButton(navigation ) {
+        IconButton(onClick = {navController.navigate(RecoverPassword)}) {
             Icon(painter = painterResource(R.drawable.back_arrow),
                 contentDescription = null)
             }

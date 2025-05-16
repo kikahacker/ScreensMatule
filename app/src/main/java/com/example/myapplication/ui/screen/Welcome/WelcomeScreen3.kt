@@ -49,7 +49,7 @@ fun WelcomeScreen3(){
 
             ) {
                 Row {
-                    Text(text = "У Вас Есть Сила, Чтобы",
+                    Text(text = stringResource(R.string.Screen3Title),
                         modifier = Modifier
                             .height(89.dp)
                             .width(315.dp),
@@ -66,7 +66,7 @@ fun WelcomeScreen3(){
 
             ) {
                 Row {
-                    Text(text = "В вашей комнате много красивых  ипривлекательных растений",
+                    Text(text = stringResource(R.string.Screen3Subtitle),
                         modifier = Modifier
                             .height(48.dp)
                             .width(322.dp),

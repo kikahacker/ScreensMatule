@@ -44,10 +44,10 @@ dependencies {
 
     implementation ("io.insert-koin:koin-androidx-compose:4.1.0-Beta5")
     implementation("androidx.datastore:datastore-preferences:1.1.3")
-
+    implementation("io.insert-koin:koin-compose:4.1.0-Beta5")
     implementation("androidx.navigation:navigation-compose:2.8.9")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.7.3")
-
+    implementation("io.insert-koin:koin-compose-viewmodel:4.1.0-Beta5")
     implementation("com.squareup.retrofit2:retrofit:2.11.0")
     implementation("com.squareup.retrofit2:converter-gson:2.11.0")
 

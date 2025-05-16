@@ -24,6 +24,7 @@ data class MatuleColors(
     val accent: Color,
     val colorForGradient1: Color,
     val colorForGradient2: Color,
+    val dialogCircle: Color
 
 )
 
@@ -61,7 +62,8 @@ val LocalMatuleColors = staticCompositionLocalOf {
         hint = Color.Unspecified,
         accent = Color.Unspecified,
         colorForGradient1 = Color.Unspecified,
-        colorForGradient2 = Color.Unspecified
+        colorForGradient2 = Color.Unspecified,
+        dialogCircle = Color.Unspecified
     )
 }
 
@@ -84,7 +86,8 @@ fun MatuleTheme( content: @Composable () -> Unit){
         hint = Color(0xFF6A6A6A),
         accent = Color(0xFF48B2E7),
         colorForGradient1 = Color(0xFF48B2E7),
-        colorForGradient2 = Color(0xFF0076B1)
+        colorForGradient2 = Color(0xFF0076B1),
+        dialogCircle = Color(0xFF48B2E7),
 
     )
     val matuleTypography = MatuleTextStyle(
